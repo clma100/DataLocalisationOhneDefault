@@ -1,0 +1,81 @@
+{
+  "info": {
+    "year": -1,
+    "version": "unknown",
+    "description": "unknown",
+    "contributor": "unknown",
+    "url": "unknown",
+    "date_created": "unknown"
+  },
+  "licenses": [],
+  "categories": [
+    {
+      "id": 1,
+      "name": "person",
+      "supercategory": "unknown"
+    }
+  ],
+  "images": [
+    {
+      "id": 1,
+      "width": 500,
+      "height": 333,
+      "file_name": "2008_000210.jpg",
+      "license": -1,
+      "flickr_url": "unknown",
+      "coco_url": "unknown",
+      "date_captured": "unknown"
+    },
+    {
+      "id": 2,
+      "width": 500,
+      "height": 371,
+      "file_name": "2008_000216.jpg",
+      "license": -1,
+      "flickr_url": "unknown",
+      "coco_url": "unknown",
+      "date_captured": "unknown"
+    }
+  ],
+  "annotations": [
+    {
+      "id": 1,
+      "area": -1.0,
+      "iscrowd": 0,
+      "caption": "unknown",
+      "segmentation": [
+        [
+          0.0,
+          45.0
+        ]
+      ],
+      "image_id": 1,
+      "category_id": 1,
+      "bbox": [
+        21.0,
+        333.0,
+        418.0,
+        332.0
+      ]
+    },
+    {
+      "id": 2,
+      "area": -1.0,
+      "iscrowd": 0,
+      "caption": "unknown",
+      "segmentation": [
+        [
+          0.0
+        ]
+      ],
+      "image_id": 2,
+      "category_id": 1,
+      "bbox": [
+        60.0,
+        371.0,
+        137.0,
+        319.0
+      ]
+    }
+  ]
+}

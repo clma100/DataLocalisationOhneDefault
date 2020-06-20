@@ -1,0 +1,38 @@
+= Konvertierung von Datensätzen zur Objektlokalisierung
+
+Die zur Verfügung gestellte Anwendung dient dazu, innerhalb bekannter Formate von Datensätzen zur Objektlokalisierung
+zu konvertieren. Die Formate folgender Datensätze werden unterstützt:
+
+- Common Objects in Context (COCO)
+- Pattern Analysis, Statistical Modelling and Computational Learning (PASCAL)
+- ImageCLEFcoral
+- OpenImage Version 5
+
+== Starten der Anwendung
+
+Nach Klonen des GitHub- Repositories kann die Anwendung entweder über eine IDE oder den Befehl "gradlew bootRun" im
+Terminalfenster des Ordners gestartet werden.
+
+== Starten von Tests
+
+Die Tests können ebenso entweder mit einer IDE gestartet oder über das Terminalfenster mit dem Befehl "gradlew clean
+test" im Projektordner gestartet werden.
+
+== Interaktion
+
+Ist die Anwendung gestartert, findet die Interaktion mit der Anwendung über eine Benutzeroberfläche statt.
+Die Benutzeroberfläche ist durch Aufruf der Adresse "localhost:6060/start" im Browser zu erreichen. Die Datensätze
+liegen in Form von Dateien vor und können einzeln, gebündelt oder als ZIP- Ordner verpackt übergeben werden.
+
+- Daten übergeben: Über "Durchsuchen..." werden die Datensätze ausgewählt und über den Button "hinzufügen" an die
+Anwendung übergeben.
+
+- Ausgabe definieren: Sind Daten an die Anwendung übergeben und es soll ein Output erstellt werden, wird über den
+Button "Output definieren" zur View der Ausgabeeinstellungen navigiert. Hier wird die Aufbereitung, das Format und der
+gewünschte Ausgabeordner definiert. Die Werteangaben beziehen sich auf die Werte der Bounding Box und des Polygons.
+Beim Splitting des Datensatzes auf zwei oder drei Dateien wird eine Verteilung prozentual zur Anzahl der Bilder
+pro Datei vorgenommen.
+
+- Ausgabe erstellen: Durch einen Klick auf den Button "erstellen" wird die Ausgabedatei/en im eingegebenen Ordner
+erstellt.
+

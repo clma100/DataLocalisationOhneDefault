@@ -1,0 +1,82 @@
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>start</title>
+    <link href="../static/css/stylesheet.css" rel="stylesheet"
+          th:href="@{/css/stylesheet.css}">
+    <meta charset="UTF-8">
+    <script th:inline="javascript">
+        function onload() {
+            const data = /*[[${numberAnnotations}]]*/ {};
+            const load = /*[[${load}]]*/ {};
+            if (data > 0) {
+                document.getElementById("output").style.visibility = "visible";
+                document.getElementById("delete").style.visibility = "visible";
+            } else {
+                document.getElementById("output").style.visibility = "hidden";
+                document.getElementById("delete").style.visibility = "hidden";
+            }
+            if (load === 1) {
+                document.getElementById("load").style.filter = "none";
+                document.getElementById("load").style.pointerEvents = "all";
+                document.getElementById("hidden").style.visibility = "hidden";
+            }
+        }
+
+        function clickUpload() {
+            document.getElementById("load").style.filter = "blur(1px)";
+            document.getElementById("load").style.pointerEvents = "none";
+            document.getElementById("hidden").style.visibility = "visible";
+        }
+    </script>
+</head>
+<body onload="onload();">
+<div class="outer" id="load">
+    <div class="headline">
+        Konvertierung von Datensätzen zur Objektlokalisierung
+        <p>Möglich ist die Konvertierung einzelner sowie mehrerer Dateien folgender Formate: COCO (JSON), PASCAL (XML),
+            OpenImageV5 (CSV), ImageCLEFcoral (TXT).
+            Es ist zudem möglich die Dateien gebündelt als .zip- Datei zu übergeben. Außerdem können .JPG- Dateien der
+            Anwendung übergeben werden.</p>
+    </div>
+    <form enctype="multipart/form-data" method="post">
+        <label>Wählen Sie die zu verarbeitenden Dateien von Ihrem Rechner aus:
+            <input multiple name="files" type="file">
+        </label>
+        <button onclick="clickUpload();">hinzufügen</button>
+    </form>
+    <div class="info">
+        <table class="overview">
+            <tr>
+                <th>Anzahl gespeicherter Annotationen:</th>
+                <th th:text="${numberAnnotations} ?: '0'"></th>
+            </tr>
+            <tr>
+                <th>Anzahl gespeicherter Kategorien:</th>
+                <th th:text="${numberCategories} ?: '0'"></th>
+            </tr>
+            <tr>
+                <th>Anzahl gespeicherter Bilder:</th>
+                <th th:text="${numberImages} ?: '0'"></th>
+            </tr>
+        </table>
+        <div class="log">
+            <table class="info_log">
+                <tr th:each="info : ${infoLog}">
+                    <td th:each="infoInner : ${info}">
+                        <span th:text="${infoInner}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="actions">
+        <a href="/output" id="output">Output definieren</a>
+        <a href="/new" id="delete">Alles löschen</a>
+    </div>
+</div>
+<div class="loader" id="hidden">
+    Daten werden eingelesen...
+    <a href="/break">Abbrechen</a>
+</div>
+</body>
+</html>

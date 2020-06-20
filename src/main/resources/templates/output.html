@@ -1,0 +1,185 @@
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>output</title>
+    <link href="../static/css/stylesheet.css" rel="stylesheet"
+          th:href="@{/css/stylesheet.css}">
+    <meta charset="UTF-8">
+    <script th:inline="javascript">
+        function disableSplit(split1, split2, split3) {
+            if (split1 === true) {
+                document.getElementById("splitPercentages").style.display = "none";
+            } else {
+                document.getElementById("splitPercentages").style.display = "block";
+            }
+            document.getElementById("split1").disabled = split1;
+            document.getElementById("split1").value = 0;
+            document.getElementById("split2").disabled = split2;
+            document.getElementById("split2").value = 0;
+            document.getElementById("split3").disabled = split3;
+            document.getElementById("split3").value = 0;
+        }
+
+        function noData() {
+            const nodata = /*[[${nodata}]]*/ {};
+            if (nodata > 0) {
+                document.getElementById("load").style.filter = "blur(1px)";
+                document.getElementById("load").style.pointerEvents = "none";
+                document.getElementById("hidden2").style.visibility = "visible";
+            } else {
+                document.getElementById("load").style.filter = "none";
+                document.getElementById("load").style.pointerEvents = "all";
+                document.getElementById("hidden2").style.visibility = "hidden";
+            }
+        }
+    </script>
+</head>
+<body onload="noData();">
+<div class="outer" id="load">
+    <div class="headline">
+        Konvertierung von Datensätzen zur Objektlokalisierung
+        <p>Bitte selektieren Sie hier das Ausgabeformat sowie das gewünschte Datenformat und die Art der Aufbereitung
+            beziehungsweise die gewünschte Aufteilung der eingelesenen Daten nach Bildern.</p>
+    </div>
+    <form class="outputForm" enctype="multipart/form-data" method="post">
+        <div>
+            <p class="option">Dateiformat:</p>
+            <p class="optionvalues">
+                <label>
+                    <input checked name="extension" type="Radio" value="json">
+                    json
+                </label>
+                <label>
+                    <input name="extension" type="Radio" value="txt">
+                    txt
+                </label>
+                <label>
+                    <input name="extension" type="Radio" value="xml">
+                    xml
+                </label>
+                <label>
+                    <input name="extension" type="Radio" value="csv">
+                    csv
+                </label>
+            </p>
+        </div>
+        <div>
+            <p class="option" scope="col" style="vertical-align: top">Format:</p>
+            <p class="optionvalues">
+                <label>
+                    <input checked name="format" type="Radio" value="coco">
+                    Coco
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="coralanloSub">
+                    Coral (annotation and localisation submission)
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="coralanloDev">
+                    Coral (annotation and localisation development)
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="coralpixSub">
+                    Coral (pixel-wise parsing task submission)
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="coralpixDev">
+                    Coral (pixel-wise parsing task development)
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="pascal">
+                    Pascal
+                </label>
+                <label>
+                    <input name="format" type="Radio" value="openImage">
+                    OpenImage5
+                </label>
+            </p>
+        </div>
+        <div>
+            <p class="option" scope="col">Wertangaben:</p>
+            <p class="optionvalues">
+                <label>
+                    <input checked name="value" type="Radio" value="absolut">
+                    absolut
+                </label>
+                <label>
+                    <input name="value" type="Radio" value="relativ">
+                    relativ
+                </label>
+            </p>
+        </div>
+        <div>
+            <p class="option" scope="col" style="vertical-align: top">Die Datenmenge soll gesplittet werden
+                in:</p>
+            <p class="optionvalues">
+                <label>
+                    <input checked name="split" onclick="disableSplit(true,true,true)" type="Radio" value="none">
+                    garnicht
+                </label>
+                <label>
+                    <input name="split" onclick="disableSplit(true,true,true)" type="Radio" value="annotation">
+                    Annotationen
+                </label>
+                (pro Annotation eine Datei)
+                <label>
+                    <input name="split" onclick="disableSplit(true,true,true)" type="Radio" value="class">
+                    Klassen (pro
+                </label>
+                Klasse eine Datei)
+                <label>
+                    <input name="split" onclick="disableSplit(true,true,true)" type="Radio" value="image">
+                    Bilder (pro Bild
+                </label>
+                eine Datei)
+                <label>
+                    <input name="split" onclick="disableSplit(false,false,true)" type="Radio" value="two">
+                    2 Dateien
+                </label>
+                <label>
+                    <input name="split" onclick="disableSplit(false,false,false)" type="Radio" value="three">
+                    3 Dateien
+                </label>
+            </p>
+            <div id="splitPercentages">
+                <p class="percentage">1. Datei: <Input disabled="disabled" id="split1" max="100" min="0"
+                                                       name="splitNumbers" step="1" type="number" value=0><label
+                        for="split1"> %</label></p>
+                <p class="percentage">2. Datei: <Input disabled="disabled" id="split2" max="100" min="0"
+                                                       name="splitNumbers" step="1" type="number" value=0><label
+                        for="split2"> %</label></p>
+                <p class="percentage">3. Datei: <Input disabled="disabled" id="split3" max="100" min="0"
+                                                       name="splitNumbers" step="1" type="number" value=0><label
+                        for="split3"> %</label></p>
+            </div>
+        </div>
+        <div>
+            <p class="option" id="outputfolder" scope="col">Ausgabeordner:</p>
+            <p class="optionvalues">
+                <label>
+                    <Input name="pathOutput" placeholder="C:\Users\Win 10\Desktop\tests\" type="text"
+                           value="C:\Users\Win 10\Desktop\tests\">
+                </label>
+                <button>erstellen</button>
+            </p>
+        </div>
+        <div class="log" style="width: 90% !important;">
+            <table class="info_log">
+                <tr th:each="info : ${fileInfo}">
+                    <td th:each="infoInner : ${info}">
+                        <span th:text="${infoInner}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="actions">
+            <a href="/new">Neu starten</a>
+            <a href="/back">Zurück</a>
+        </div>
+    </form>
+</div>
+<div class="loader" id="hidden2">
+    Keine Annotationen vorhanden.
+    <a href="/back">Daten übergeben</a>
+</div>
+</body>
+</html>

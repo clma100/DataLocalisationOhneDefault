@@ -1,0 +1,138 @@
+a {
+    padding-right: 1pc;
+}
+
+button {
+    color: black;
+    border-radius: 4px;
+    border-width: 3px;
+    padding: 1% 1.5%;
+    margin: 2%;
+    border-color: cadetblue;
+}
+
+input {
+    width: 14pc;
+    padding-left: 1.2pc;
+}
+
+input[type=radio] {
+    width: 2pc !important;
+}
+
+body {
+    font-family: "Trebuchet MS", serif;
+    font-size: 18px;
+}
+
+.outer {
+    color: black;
+    margin: 1% 10%;
+    background: #f1f0f0;
+    padding: 2%;
+    border-radius: 2%;
+    box-sizing: border-box;
+    min-width: 650px;
+    min-height: fit-content;
+    filter: none;
+    pointer-events: all;
+}
+
+#split1, #split2, #split3 {
+    width: 50px !important;
+    padding-left: 8px !important;
+}
+
+.percentage {
+    width: 120px !important;
+    display: inline-block !important;
+    padding-right: 14px !important;
+}
+
+#splitPercentages {
+    font-size: small !important;
+    margin-left: 20% !important;
+    display: none;
+}
+
+.headline {
+    margin-bottom: 3%;
+    font-weight: bold;
+    color: #394d71;
+    font-size: 15px;
+    border-width: 1px;
+    border-bottom-style: dashed;
+}
+
+.log {
+    width: 50%;
+    height: 7pc;
+    background: #efebea;
+    display: inline-block;
+    padding: 1%;
+    overflow-y: scroll !important;
+}
+
+.info_log {
+    font-family: monospace !important;
+    color: midnightblue !important;
+}
+
+.overview {
+    text-align: left !important;
+    width: 49%;
+    display: inline-block;
+    height: 7pc;
+    padding: 1% 9% 1% 1%;
+    background: #efebea;
+    font-family: monospace !important;
+    color: midnightblue !important;
+}
+
+.info {
+    background: #efebea;
+    vertical-align: top !important;
+    display: flex;
+}
+
+.actions {
+    margin: 2% 0;
+    padding: 2% 0;
+}
+
+.outputForm {
+    padding: 1%;
+}
+
+.option {
+    width: 20%;
+    display: inline-block;
+}
+
+p {
+    padding: 2% 0;
+    margin: 0 !important;
+}
+
+.optionvalues {
+    width: 75%;
+    display: inline-block;
+}
+
+.loader {
+    background: aqua;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 3em;
+    width: 15em;
+    text-align: center;
+    border-radius: 14px;
+    padding-top: 25px;
+    border: 1px solid azure;
+}
+
+#hidden, #hidden2 {
+    visibility: hidden;
+}
