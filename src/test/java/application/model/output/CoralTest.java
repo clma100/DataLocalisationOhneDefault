@@ -261,7 +261,7 @@ public class CoralTest {
         coralService.setKindOfValue("relativ",listAnn);
 
         Coral coral = new Coral(listAnn, true, true);
-        Assert.assertEquals(42, coral.getCoralAnnotationArrayList().size());
+        Assert.assertEquals(21, coral.getCoralAnnotationArrayList().size());
 
         String anloDevRelativ = "2018_0714_112502_024 0 c_hard_coral_encrusting -1 0.26537698 0.11342593 0.35391865 0.23048942\n" +
                 "2018_0714_112502_024 1 c_hard_coral_encrusting -1 0.03521825 0.46064815 0.10292659 0.53835979\n" +
@@ -283,28 +283,7 @@ public class CoralTest {
                 "2018_0714_112502_024 17 c_soft_coral -1 0.45362103 0.07936508 0.49280754 0.13657407\n" +
                 "2018_0714_112502_024 18 c_soft_coral -1 0.34176587 0.1739418 0.390625 0.22585979\n" +
                 "2018_0714_112502_024 19 c_soft_coral_gorgonian -1 0.56696429 0.73710317 0.66195437 0.94510582\n" +
-                "2018_0714_112502_024 20 c_sponge_barrel -1 0.33134921 0.64384921 0.55803571 0.87566138\n" +
-                "2018_0714_112540_049 0 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 1 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 2 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 3 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 4 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 5 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 6 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 7 c_hard_coral_boulder -1 0 0 0 0\n" +
-                "2018_0714_112540_049 8 c_hard_coral_branching -1 0 0 0 0\n" +
-                "2018_0714_112540_049 9 c_hard_coral_encrusting -1 0 0 0 0\n" +
-                "2018_0714_112540_049 10 c_hard_coral_encrusting -1 0 0 0 0\n" +
-                "2018_0714_112540_049 11 c_hard_coral_submassive -1 0 0 0 0\n" +
-                "2018_0714_112540_049 12 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 13 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 14 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 15 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 16 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 17 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 18 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 19 c_soft_coral -1 0 0 0 0\n" +
-                "2018_0714_112540_049 20 c_soft_coral -1 0 0 0 0";
+                "2018_0714_112502_024 20 c_sponge_barrel -1 0.33134921 0.64384921 0.55803571 0.87566138";
         Assert.assertEquals(anloDevRelativ, coral.printTxt(true, true));
 
         listImages.clear();

@@ -26,8 +26,7 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -169,7 +168,9 @@ public class FileManagerTest {
     public void createOutputCocoTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Coco coco = PowerMockito.mock(Coco.class);
         whenNew(Coco.class).withAnyArguments().thenReturn(coco);
         when(coco.printJson()).thenReturn("coco");
@@ -185,7 +186,9 @@ public class FileManagerTest {
     public void createOutputCoralAnloSubTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Coral coral = PowerMockito.mock(Coral.class);
         whenNew(Coral.class).withAnyArguments().thenReturn(coral);
         when(coral.printTxt(eq(false), eq(true))).thenReturn("coralanloSub");
@@ -201,7 +204,9 @@ public class FileManagerTest {
     public void createOutputCoralAnloDevTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Coral coral = PowerMockito.mock(Coral.class);
         whenNew(Coral.class).withAnyArguments().thenReturn(coral);
         when(coral.printTxt(eq(true), eq(true))).thenReturn("coralanloDev");
@@ -217,7 +222,9 @@ public class FileManagerTest {
     public void createOutputCoralPixSubTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Coral coral = PowerMockito.mock(Coral.class);
         whenNew(Coral.class).withAnyArguments().thenReturn(coral);
         when(coral.printTxt(eq(false), eq(false))).thenReturn("coralanloDev");
@@ -227,14 +234,16 @@ public class FileManagerTest {
         Mockito.verify(fileManagerService).setAbsNumberOfSplit(eq(splitNumbers));
         PowerMockito.verifyNew(Coral.class).withArguments(eq(fileManagerService.annotationsList), eq(false), eq(false));
         Assert.assertEquals(0, coral.getCoralAnnotationArrayList().size());
-        Assert.assertEquals("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.", fileManagerService.getInfoLog().get(0).get(1));
+        Assert.assertEquals("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.", fileManagerService.getInfoLog().get(0).get(0));
     }
 
     @Test
     public void createOutputCoralPixDevTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Coral coral = PowerMockito.mock(Coral.class);
         whenNew(Coral.class).withAnyArguments().thenReturn(coral);
         when(coral.printTxt(eq(false), eq(true))).thenReturn("coralanloDev");
@@ -244,14 +253,16 @@ public class FileManagerTest {
         Mockito.verify(fileManagerService).setAbsNumberOfSplit(eq(splitNumbers));
         PowerMockito.verifyNew(Coral.class).withArguments(eq(fileManagerService.annotationsList), eq(false), eq(true));
         Assert.assertEquals(0, coral.getCoralAnnotationArrayList().size());
-        Assert.assertEquals("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.", fileManagerService.getInfoLog().get(0).get(1));
+        Assert.assertEquals("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.", fileManagerService.getInfoLog().get(0).get(0));
     }
 
     @Test
     public void createOutputPascalTest() throws Exception {
         double[] splitNumbers = {100, 0, 0};
         FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
-        fileManagerService.getAnnotationsList().add(new Annotations());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
         Pascal pascal = PowerMockito.mock(Pascal.class);
         whenNew(Pascal.class).withAnyArguments().thenReturn(pascal);
         ArrayList <String> pascalArray = new ArrayList <>();
@@ -261,5 +272,31 @@ public class FileManagerTest {
         Mockito.verify(fileManagerService).setKindOfValue(eq("absolut"), eq(fileManagerService.annotationsList));
         Mockito.verify(fileManagerService).setAbsNumberOfSplit(eq(splitNumbers));
         PowerMockito.verifyNew(Pascal.class).withArguments(eq(fileManagerService.annotationsList));
+    }
+
+    @Test
+    public void noOutputNotConvertableFromAbsolutToRelativTest() throws Exception {
+        double[] splitNumbers = {100, 0, 0};
+        FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(1);
+        fileManagerService.getAnnotationsList().add(annotations);
+        fileManagerService.createOutput(temporaryFolder.getRoot().getAbsolutePath(), "xml", "pascal", "relativ", "none", splitNumbers);
+
+        Mockito.verify(fileManagerService).setKindOfValue(eq("relativ"), any());
+        Assert.assertEquals("Keine Konvertierung zu relativen Werten möglich.", fileManagerService.getInfoLog().get(0).get(0));
+    }
+
+    @Test
+    public void noOutputNotConvertableFromRelativToAbsolutTest() throws Exception {
+        double[] splitNumbers = {100, 0, 0};
+        FileManagerService fileManagerService = PowerMockito.spy(new FileManagerService());
+        Annotations annotations = new Annotations();
+        annotations.setAbsoluteValue(0);
+        fileManagerService.getAnnotationsList().add(annotations);
+        fileManagerService.createOutput(temporaryFolder.getRoot().getAbsolutePath(), "xml", "pascal", "absolut", "none", splitNumbers);
+
+        Mockito.verify(fileManagerService).setKindOfValue(eq("absolut"), any());
+        Assert.assertEquals("Keine Konvertierung zu relativen Werten möglich.", fileManagerService.getInfoLog().get(0).get(0));
     }
 }

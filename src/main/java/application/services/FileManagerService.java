@@ -145,39 +145,46 @@ public class FileManagerService extends PrepService {
         while (annotationAt < this.annotationsList.size()) {
             this.infoLog.add(new ArrayList <>());
             ArrayList <Annotations> inputSplitted = this.splitData(split, this.setAbsNumberOfSplit(splitNumbers), counterFiles, annotationAt);
-            this.setKindOfValue(value, inputSplitted);
             annotationAt += inputSplitted.size();
-            String fileContent = "";
-            if (format.equals("pascal")) {
-                ArrayList <String> fileContentArray = new Pascal(inputSplitted).printXml();
-                for (String string : fileContentArray) {
-                    createFile(path, format, extension, string);
+            this.setKindOfValue(value, inputSplitted);
+            if (inputSplitted.size() > 0) {
+                String fileContent = "";
+                if (format.equals("pascal")) {
+                    ArrayList <String> fileContentArray = new Pascal(inputSplitted).printXml();
+                    for (String string : fileContentArray) {
+                        createFile(path, format, extension, string);
+                        counterFiles++;
+                    }
+                } else {
+                    if (format.equals("coco")) {
+                        fileContent = new Coco(imagesList, categoriesList, inputSplitted).printJson();
+                    } else if (format.contains("coral")) {
+                        boolean dev = false;          //if development format is required, else submission
+                        if (format.contains("Dev")) {
+                            dev = true;
+                        }
+                        if (format.contains("anlo")) {
+                            fileContent = new Coral(inputSplitted, true, dev).printTxt(dev, true);
+                        } else {
+                            Coral coral = new Coral(inputSplitted, false, dev);
+                            if (coral.getCoralAnnotationArrayList().size() != 0) {
+                                fileContent = coral.printTxt(dev, false);
+                            } else {
+                                this.getInfoLog().get(infoLog.size() - 1).add("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.");
+                                return;
+                            }
+                        }
+                    } else if (format.equals("openImage")) {
+                        fileContent = new OpenImage5(inputSplitted).printCsv();
+                    }
+                    createFile(path, format, extension, fileContent);
                     counterFiles++;
                 }
             } else {
-                if (format.equals("coco")) {
-                    fileContent = new Coco(imagesList, categoriesList, inputSplitted).printJson();
-                } else if (format.contains("coral")) {
-                    boolean dev = false;          //if development format is required, else submission
-                    if (format.contains("Dev")) {
-                        dev = true;
-                    }
-                    if (format.contains("anlo")) {
-                        fileContent = new Coral(inputSplitted, true, dev).printTxt(dev, true);
-                    } else {
-                        Coral coral = new Coral(inputSplitted, false, dev);
-                        if (coral.getCoralAnnotationArrayList().size() != 0) {
-                            fileContent = coral.printTxt(dev, false);
-                        } else {
-                            this.getInfoLog().get(infoLog.size() - 1).add("Keine Konvertierung möglich: ImageCLEFcoral Pixel-wise Parsing task benötigt Polygon. Keine Polygonangaben vorhanden.");
-                            return;
-                        }
-                    }
-                } else if (format.equals("openImage")) {
-                    fileContent = new OpenImage5(inputSplitted).printCsv();
+                if (counterFiles == 0) {
+                    this.getInfoLog().get(infoLog.size() - 1).add("Keine Konvertierung zu relativen Werten möglich.");
                 }
-                createFile(path, format, extension, fileContent);
-                counterFiles++;
+                break;
             }
         }
         counterFiles = 0;

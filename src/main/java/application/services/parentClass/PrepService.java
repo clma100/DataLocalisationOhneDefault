@@ -131,13 +131,9 @@ public class PrepService {
      */
     public void setKindOfValue(String value, ArrayList <Annotations> annotationsList) {
         if (value.equals("relativ")) {
-            for (Annotations annotations : annotationsList) {
-                doValueOutput(0, annotations);
-            }
+            annotationsList.removeIf(annotations -> doValueOutput(0, annotations));
         } else if (value.equals("absolut")) {
-            for (Annotations annotations : annotationsList) {
-                doValueOutput(1, annotations);
-            }
+            annotationsList.removeIf(annotations -> doValueOutput(1, annotations));
         }
     }
 
@@ -146,10 +142,11 @@ public class PrepService {
      *
      * @param absoluteValue, 0 (relativ) or 1 (absolut)
      * @param annotation     annotation, which values are to be converted
+     * @return true if converstion possible, else false
      */
-    private void doValueOutput(int absoluteValue, Annotations annotation) {
+    private boolean doValueOutput(int absoluteValue, Annotations annotation) {
         if (absoluteValue == annotation.getAbsoluteValue()) {
-            return;
+            return false;
         }
         if (annotation.getImage().getWidth() != -1 && annotation.getImage().getHeight() != -1) {
             if (absoluteValue == 1) {
@@ -161,12 +158,10 @@ public class PrepService {
                 annotation.getBbox().setRelativValues(annotation.getImage());
                 annotation.setAbsoluteValue(0);
             }
-        } else {
-            annotation.getPolygon().setDefaultValue();
-            annotation.getBbox().setDefaultValue();
-            annotation.setAbsoluteValue(-1);
-            this.infoLog.get(infoLog.size() - 1).add("Werte der Annotation " + annotation.getId() + " in Bild '" + annotation.getImage().getFileName() + "' können nicht umgerechnet werden.");
+            return false;
         }
+        annotation.setAbsoluteValue(-1);
+        return true;
     }
 
     public Bbox createBboxFromPolygon(Polygon polygon) {

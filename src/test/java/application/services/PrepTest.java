@@ -231,6 +231,8 @@ public class PrepTest {
         Assert.assertEquals(-1, annotation1.getAbsoluteValue());
         Assert.assertEquals(0, annotation2.getAbsoluteValue());
         Assert.assertEquals(-1, annotation3.getAbsoluteValue());
+        Assert.assertEquals(1, prepService.annotationsList.size());
+        Assert.assertEquals(annotation2, prepService.annotationsList.get(0));
     }
 
     @Test
@@ -239,6 +241,9 @@ public class PrepTest {
         Assert.assertEquals(1, annotation1.getAbsoluteValue());
         Assert.assertEquals(-1, annotation2.getAbsoluteValue());
         Assert.assertEquals(1, annotation3.getAbsoluteValue());
+        Assert.assertEquals(2, prepService.annotationsList.size());
+        Assert.assertEquals(annotation1, prepService.annotationsList.get(0));
+        Assert.assertEquals(annotation3, prepService.annotationsList.get(1));
     }
 
     @Test
@@ -272,5 +277,18 @@ public class PrepTest {
         Assert.assertEquals(1, annotation1.getAbsoluteValue());
         Assert.assertEquals(1, annotation2.getAbsoluteValue());
         Assert.assertEquals(1, annotation3.getAbsoluteValue());
+    }
+
+    @Test
+    public void setKindOfValueOneNotConvertable() {
+        image1.setWidth(100);
+        image1.setHeight(200);
+        prepService.setKindOfValue("relativ", prepService.getAnnotationsList());
+        Assert.assertEquals(0, annotation1.getAbsoluteValue());
+        Assert.assertEquals(0, annotation2.getAbsoluteValue());
+        Assert.assertEquals(-1, annotation3.getAbsoluteValue());
+        Assert.assertEquals(2, prepService.annotationsList.size());
+        Assert.assertEquals(annotation1, prepService.annotationsList.get(0));
+        Assert.assertEquals(annotation2, prepService.annotationsList.get(1));
     }
 }
